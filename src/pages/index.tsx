@@ -7,12 +7,23 @@ import { RootStackParamList } from './types';
 
 export const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export function router() {
-    return (
+export function router(isSignedIn: boolean) {
+    return isSignedIn ? (
         <>
-            <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Details" component={Details} />
+            <Stack.Screen
+                name="Details"
+                component={Details}
+                initialParams={{ paramOne: 'initial', paramTwo: 3 }}
+            />
+        </>
+    ) : (
+        <>
+            <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+            />
         </>
     );
 }
