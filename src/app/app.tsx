@@ -1,28 +1,18 @@
-import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { onAuthStateChanged } from 'firebase/auth';
-import { useEffect, useState } from 'react';
 
-import { router, Stack } from '~/pages';
-import { firebaseAuth } from '~/shared/config';
+import { useAuth } from './lib';
+import { Navigation } from './providers';
+import { ReactQueryProvider } from './providers/react-query';
 
 export default function Root() {
-    const [isSignedIn, setIsSignedIn] = useState(false);
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
-            setIsSignedIn(Boolean(user));
-        });
-
-        return unsubscribe;
-    });
+    const { isSignedIn } = useAuth();
 
     return (
         <>
             <StatusBar style="dark" />
-            <NavigationContainer>
-                <Stack.Navigator>{router(isSignedIn)}</Stack.Navigator>
-            </NavigationContainer>
+            <ReactQueryProvider>
+                <Navigation isSignedIn={isSignedIn} />
+            </ReactQueryProvider>
         </>
     );
 }
