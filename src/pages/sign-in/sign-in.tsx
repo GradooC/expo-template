@@ -15,7 +15,7 @@ import {
 
 import { firebaseAuth } from '~/shared/config';
 
-export function Login() {
+export function SignIn() {
     const [isLoginLoading, setIsLoginLoading] = useState(false);
     const [isSignUpLoading, setIsSignUpLoading] = useState(false);
     const [email, setEmail] = useState('test@test.com');

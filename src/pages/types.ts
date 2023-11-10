@@ -7,7 +7,7 @@ type DetailsParams = {
 
 export type RootStackParamList = {
     Home: undefined;
-    Login: undefined;
+    SignIn: undefined;
     Details: DetailsParams;
 };
 
