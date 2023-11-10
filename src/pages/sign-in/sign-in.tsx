@@ -1,11 +1,6 @@
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-} from 'firebase/auth';
 import { useState } from 'react';
 import {
     ActivityIndicator,
-    Alert,
     Button,
     StyleSheet,
     Text,
@@ -13,34 +8,25 @@ import {
     View,
 } from 'react-native';
 
-import { firebaseAuth } from '~/shared/config';
+import { useSignInWithEmailAndPassword } from '~/feature/session/sign-in';
+import { useCreateUserWithEmailAndPassword } from '~/feature/session/sign-up';
 
 export function SignIn() {
-    const [isLoginLoading, setIsLoginLoading] = useState(false);
-    const [isSignUpLoading, setIsSignUpLoading] = useState(false);
     const [email, setEmail] = useState('test@test.com');
     const [password, setPassword] = useState('111111');
 
-    async function handleLogin() {
-        setIsLoginLoading(true);
-        try {
-            await signInWithEmailAndPassword(firebaseAuth, email, password);
-        } catch (error) {
-            Alert.alert('Something went wrong', (error as any).message);
-        } finally {
-            setIsLoginLoading(false);
-        }
+    const { isPending: isLoginLoading, mutate: signIn } =
+        useSignInWithEmailAndPassword(email, password);
+
+    const { isPending: isSignUpLoading, mutate: signUp } =
+        useCreateUserWithEmailAndPassword(email, password);
+
+    function handleSignUp() {
+        signUp();
     }
 
-    async function handleSignUp() {
-        setIsSignUpLoading(true);
-        try {
-            await createUserWithEmailAndPassword(firebaseAuth, email, password);
-        } catch (error) {
-            Alert.alert('Something went wrong', (error as any).message);
-        } finally {
-            setIsSignUpLoading(false);
-        }
+    function handleLogin() {
+        signIn();
     }
 
     function handleEmailChange(text: string) {
@@ -51,13 +37,13 @@ export function SignIn() {
         setPassword(text);
     }
 
-    const login = isLoginLoading ? (
+    const signInButton = isLoginLoading ? (
         <ActivityIndicator size="large" />
     ) : (
         <Button title="Login" onPress={handleLogin} />
     );
 
-    const signUp = isSignUpLoading ? (
+    const signUpButton = isSignUpLoading ? (
         <ActivityIndicator size="large" />
     ) : (
         <Button title="Sign up" color="black" onPress={handleSignUp} />
@@ -79,8 +65,8 @@ export function SignIn() {
                 placeholder="Password"
                 secureTextEntry={true}
             />
-            {login}
-            {signUp}
+            {signInButton}
+            {signUpButton}
         </View>
     );
 }

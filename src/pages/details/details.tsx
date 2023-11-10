@@ -1,15 +1,15 @@
-import { signOut } from 'firebase/auth';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { RootNativeStackScreenProps } from '../types';
 
-import { firebaseAuth } from '~/shared/config';
+import { useSignOut } from '~/feature/session/sign-out';
 
 export function Details({ route }: RootNativeStackScreenProps<'Details'>) {
     const { paramOne, paramTwo } = route.params;
+    const { mutate } = useSignOut();
 
     function handleLogOut() {
-        signOut(firebaseAuth);
+        mutate();
     }
 
     return (
