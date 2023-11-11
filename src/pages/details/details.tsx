@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 
 import { RootNativeStackScreenProps } from '../types';
 
-import { useSignOut } from '~/feature/session/sign-out';
+import { useSignOut } from '~/features/session';
 
 export function Details({ route }: RootNativeStackScreenProps<'Details'>) {
     const { paramOne, paramTwo } = route.params;

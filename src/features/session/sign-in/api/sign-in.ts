@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import { Alert } from 'react-native';
 
-import { firebaseAuth } from '~/shared/config';
+import { firebaseAuth } from '~/shared/config/firebase';
 
 export function useSignInWithEmailAndPassword(email: string, password: string) {
     return useMutation<UserCredential, AuthError>({

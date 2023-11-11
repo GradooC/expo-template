@@ -8,8 +8,10 @@ import {
     View,
 } from 'react-native';
 
-import { useSignInWithEmailAndPassword } from '~/feature/session/sign-in';
-import { useCreateUserWithEmailAndPassword } from '~/feature/session/sign-up';
+import {
+    useSignInWithEmailAndPassword,
+    useCreateUserWithEmailAndPassword,
+} from '~/features/session';
 
 export function SignIn() {
     const [email, setEmail] = useState('test@test.com');
