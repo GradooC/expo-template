@@ -9,18 +9,18 @@ import {
     View,
 } from 'react-native';
 
-import { useSignInWithEmailAndPassword } from '~/features/session';
+import { useCreateUserWithEmailAndPassword } from '~/features/session';
 
-export function SignIn() {
+export function SignUp() {
     const [email, setEmail] = useState('test@test.com');
     const [password, setPassword] = useState('111111');
 
-    const { isPending, mutate } = useSignInWithEmailAndPassword(
+    const { isPending, mutate } = useCreateUserWithEmailAndPassword(
         email,
         password,
     );
 
-    function handleLogin() {
+    function handleSignUp() {
         mutate();
     }
 
@@ -32,15 +32,15 @@ export function SignIn() {
         setPassword(text);
     }
 
-    const signInButton = isPending ? (
+    const signUpButton = isPending ? (
         <ActivityIndicator size="large" />
     ) : (
-        <Button title="Sign In" onPress={handleLogin} />
+        <Button title="Sign up" color="orange" onPress={handleSignUp} />
     );
 
     return (
         <View style={styles.root}>
-            <Text>Sign In Page</Text>
+            <Text>Sign Up Page</Text>
             <TextInput
                 style={styles.input}
                 onChangeText={handleEmailChange}
@@ -54,11 +54,11 @@ export function SignIn() {
                 placeholder="Password"
                 secureTextEntry={true}
             />
-            {signInButton}
+            {signUpButton}
             <Text>
-                Don't have an account?&nbsp;
-                <Link to="/SignUp" style={styles.link}>
-                    Sign Up
+                Already have an account?&nbsp;
+                <Link to="/SignIn" style={styles.link}>
+                    Sign In
                 </Link>
             </Text>
         </View>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         width: '80%',
     },
     link: {
-        color: 'orange',
+        color: 'cornflowerblue',
         fontWeight: 'bold',
     },
 });
