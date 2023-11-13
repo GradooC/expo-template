@@ -12,11 +12,7 @@ export function router(isSignedIn: boolean) {
     return isSignedIn ? (
         <>
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen
-                name="Details"
-                component={Details}
-                initialParams={{ paramOne: 'initial', paramTwo: 3 }}
-            />
+            <Stack.Screen name="Details" component={Details} />
         </>
     ) : (
         <>

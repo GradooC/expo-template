@@ -1,23 +1,21 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
-
-import { useSignOut } from '~/features/session';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { RootNativeStackScreenProps } from '../types';
 
 export function Details({ route }: RootNativeStackScreenProps<'Details'>) {
-    const { paramOne, paramTwo } = route.params;
-    const { mutate } = useSignOut();
-
-    function handleLogOut() {
-        mutate();
-    }
+    const { firstName, lastName, photo } = route.params;
 
     return (
         <View style={styles.root}>
-            <Text>Details Page</Text>
-            <Text>First param: {paramOne}</Text>
-            <Text>Second param: {paramTwo}</Text>
-            <Button title="Log out" onPress={handleLogOut} />
+            <View style={styles.photoBlock}>
+                <View style={styles.photoWrapper}>
+                    <Image style={styles.photo} source={{ uri: photo }} />
+                </View>
+            </View>
+            <View style={styles.bioBlock}>
+                <Text style={styles.firstName}>{firstName}</Text>
+                <Text style={styles.lastName}>{lastName}</Text>
+            </View>
         </View>
     );
 }
@@ -28,5 +26,36 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         gap: 15,
+    },
+    photoBlock: {
+        flex: 2,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'skyblue',
+    },
+    photoWrapper: {
+        padding: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'whitesmoke',
+        borderRadius: 9999,
+    },
+    photo: {
+        width: 200,
+        height: 200,
+    },
+    bioBlock: {
+        flex: 3,
+        alignItems: 'center',
+    },
+    firstName: {
+        fontSize: 38,
+        fontWeight: 'bold',
+        color: 'gray',
+    },
+    lastName: {
+        fontSize: 38,
+        color: 'gray',
     },
 });

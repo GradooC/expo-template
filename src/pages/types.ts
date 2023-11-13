@@ -1,15 +1,12 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-type DetailsParams = {
-    paramOne: string;
-    paramTwo: number;
-};
+import { FriendList } from '~/shared/api';
 
 export type RootStackParamList = {
     SignIn: undefined;
     SignUp: undefined;
     Home: undefined;
-    Details: DetailsParams;
+    Details: FriendList[number];
 };
 
 export type RootNativeStackScreenProps<T extends keyof RootStackParamList> =
