@@ -9,9 +9,10 @@ import {
     View,
 } from 'react-native';
 
-import { FriendList, useUpdateFriend } from '~/shared/api';
+import { useUpdateFriend } from '~/shared/api';
+import { Friend } from '~/shared/models';
 
-type EditFriendProps = { item: FriendList[number] };
+type EditFriendProps = { item: Friend };
 
 export function EditFriend({ item }: EditFriendProps) {
     const { firstName, lastName, photo, id } = item;

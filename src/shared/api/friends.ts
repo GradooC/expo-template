@@ -1,20 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getDocs, FirestoreError, setDoc, getDoc } from 'firebase/firestore';
+import { getDocs, setDoc, getDoc } from 'firebase/firestore';
 import { Alert } from 'react-native';
 
-import { friendsCollection, getFriendDoc } from '../config/firestore';
-
-export type FriendList = Awaited<ReturnType<typeof getFriends>>;
-
-async function getFriends() {
-    const friendSnapshot = await getDocs(friendsCollection);
-    return friendSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-}
+import { Friend, friendsCollection, getFriendDoc } from '../models';
 
 export function useFriendList() {
-    return useQuery<FriendList, FirestoreError>({
+    return useQuery({
         queryKey: ['friends'],
-        queryFn: () => getFriends(),
+        queryFn: async () => {
+            const friendSnapshot = await getDocs(friendsCollection);
+            return friendSnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+        },
     });
 }
 
@@ -32,12 +31,7 @@ export function useUpdateFriend() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async ({
-            id,
-            firstName,
-            lastName,
-            photo,
-        }: FriendList[number]) => {
+        mutationFn: async ({ id, firstName, lastName, photo }: Friend) => {
             const docRef = getFriendDoc(id);
             return setDoc(
                 docRef,
