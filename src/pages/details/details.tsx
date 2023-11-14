@@ -1,5 +1,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 
+import { EditFriend } from '~/features/edit-friend';
+
 import { RootNativeStackScreenProps } from '../types';
 
 export function Details({ route }: RootNativeStackScreenProps<'Details'>) {
@@ -15,6 +17,7 @@ export function Details({ route }: RootNativeStackScreenProps<'Details'>) {
             <View style={styles.bioBlock}>
                 <Text style={styles.firstName}>{firstName}</Text>
                 <Text style={styles.lastName}>{lastName}</Text>
+                <EditFriend item={route.params} />
             </View>
         </View>
     );
