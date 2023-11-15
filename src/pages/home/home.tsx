@@ -1,6 +1,7 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { FriendCard } from '~/entities/friend';
+import { AddFriend } from '~/features/add-friend';
 import { useFriendList, useSignOut } from '~/shared/api';
 
 import { RootNativeStackScreenProps } from '../types';
@@ -15,7 +16,7 @@ export function Home({ navigation }: RootNativeStackScreenProps<'Home'>) {
 
     return (
         <View style={styles.root}>
-            <Text>Home Page</Text>
+            <AddFriend />
             <FlatList
                 contentContainerStyle={styles.container}
                 style={styles.list}

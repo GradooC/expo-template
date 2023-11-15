@@ -1,23 +1,17 @@
-import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Button } from 'react-native';
 
-import { useUpdateFriend } from '~/shared/api';
-import { Friend } from '~/shared/models';
+import { useAddFriend } from '~/shared/api';
+import { getAvatar } from '~/shared/lib';
 import {
     EditFriendModal,
     EditFriendModalProps,
 } from '~/shared/ui/edit-friend-modal';
 
-type EditFriendProps = { item: Friend };
-
-export function EditFriend({ item }: EditFriendProps) {
-    const { firstName, lastName, photo, id } = item;
-
+export function AddFriend() {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const { mutate, isPending } = useUpdateFriend();
-    const navigation = useNavigation();
+    const { mutate, isPending } = useAddFriend();
 
     function handleCloseModal() {
         setIsModalVisible(false);
@@ -31,27 +25,22 @@ export function EditFriend({ item }: EditFriendProps) {
         editedFirstName,
         editedLastName,
     }) => {
-        const newData = {
+        const friendInfo = {
             firstName: editedFirstName,
             lastName: editedLastName,
-            photo,
-            id,
+            photo: getAvatar(editedFirstName),
         };
-
-        mutate(newData, {
+        mutate(friendInfo, {
             onSuccess: () => {
                 setIsModalVisible(false);
-                navigation.setParams(newData);
             },
         });
     };
 
     return (
         <>
-            <Button title="Edit" color="skyblue" onPress={handleOpenModal} />
+            <Button title="Add" color="yellowgreen" onPress={handleOpenModal} />
             <EditFriendModal
-                firstName={firstName}
-                lastName={lastName}
                 isPending={isPending}
                 isVisible={isModalVisible}
                 onClose={handleCloseModal}
