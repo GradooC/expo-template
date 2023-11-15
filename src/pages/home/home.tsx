@@ -1,8 +1,7 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { FriendCard } from '~/entities/friend';
-import { useSignOut } from '~/features/session';
-import { useFriendList } from '~/shared/api';
+import { useFriendList, useSignOut } from '~/shared/api';
 
 import { RootNativeStackScreenProps } from '../types';
 

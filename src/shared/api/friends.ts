@@ -20,9 +20,10 @@ export function useFriendList() {
 export function useGetFriendById(id: string) {
     return useQuery({
         queryKey: ['friends', id],
-        queryFn: () => {
+        queryFn: async () => {
             const docRef = getFriendDoc(id);
-            return getDoc(docRef);
+            const docSnap = await getDoc(docRef);
+            return { id: docSnap.id, ...docSnap.data() };
         },
     });
 }

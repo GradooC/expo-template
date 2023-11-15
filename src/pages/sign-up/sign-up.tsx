@@ -9,7 +9,7 @@ import {
     View,
 } from 'react-native';
 
-import { useCreateUserWithEmailAndPassword } from '~/features/session';
+import { useCreateUserWithEmailAndPassword } from '~/shared/api';
 
 export function SignUp() {
     const [email, setEmail] = useState('test@test.com');
