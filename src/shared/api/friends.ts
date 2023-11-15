@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getDocs, setDoc, getDoc } from 'firebase/firestore';
+import { getDocs, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
 import { Alert } from 'react-native';
 
 import { Friend, friendsCollection, getFriendDoc } from '../models';
@@ -24,6 +24,20 @@ export function useGetFriendById(id: string) {
             const docRef = getFriendDoc(id);
             const docSnap = await getDoc(docRef);
             return { id: docSnap.id, ...docSnap.data() };
+        },
+    });
+}
+
+export function useDeleteFriend() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (id: string) => {
+            const docRef = getFriendDoc(id);
+            return await deleteDoc(docRef);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['friends'] });
         },
     });
 }

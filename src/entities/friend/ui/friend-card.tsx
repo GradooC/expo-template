@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Button, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { useDeleteFriend } from '~/shared/api';
 import { Friend } from '~/shared/models';
 
 type FriendCardProps = {
@@ -10,10 +11,16 @@ type FriendCardProps = {
 export function FriendCard({ item }: FriendCardProps) {
     const { id, firstName, lastName, photo } = item;
 
+    const { mutate } = useDeleteFriend();
+
     const navigation = useNavigation();
 
     function handlePickFriend(item: Friend) {
         navigation.navigate('Details', item);
+    }
+
+    function handleDelete() {
+        mutate(id);
     }
 
     return (
@@ -29,6 +36,7 @@ export function FriendCard({ item }: FriendCardProps) {
                 <Text style={styles.firstName}>{firstName}</Text>
                 <Text>{lastName}</Text>
             </View>
+            <Button title="Delete" color="lightsalmon" onPress={handleDelete} />
         </Pressable>
     );
 }
@@ -56,6 +64,7 @@ const styles = StyleSheet.create({
     bio: {
         display: 'flex',
         gap: 5,
+        marginRight: 'auto',
     },
     firstName: {
         fontWeight: 'bold',
