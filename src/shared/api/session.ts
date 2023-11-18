@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
     AuthError,
     UserCredential,
@@ -19,8 +19,14 @@ export function useSignInWithEmailAndPassword(email: string, password: string) {
 }
 
 export function useSignOut() {
+    const queryClient = useQueryClient();
+
     return useMutation<void, AuthError>({
         mutationFn: () => signOut(firebaseAuth),
+        onSuccess: () => {
+            queryClient.removeQueries();
+        },
+
         onError: (error) => Alert.alert('Something went wrong', error.message),
     });
 }

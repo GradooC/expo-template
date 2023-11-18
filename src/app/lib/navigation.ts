@@ -1,18 +1,18 @@
-import { onAuthStateChanged } from 'firebase/auth';
+import { User, onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
 import { firebaseAuth } from '~/shared/config';
 
 export function useAuth() {
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
-            setIsSignedIn(Boolean(user));
+        const unsubscribe = onAuthStateChanged(firebaseAuth, (firebaseUser) => {
+            setUser(firebaseUser);
         });
 
         return unsubscribe;
     });
 
-    return { isSignedIn };
+    return { user };
 }

@@ -1,15 +1,18 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { User } from 'firebase/auth';
 
 import { Stack, router } from '~/pages';
 
 type NavigationProps = {
-    isSignedIn: boolean;
+    user: User | null;
 };
 
-export function Navigation({ isSignedIn }: NavigationProps) {
+export function Navigation({ user }: NavigationProps) {
+    const isSigned = Boolean(user);
+
     return (
         <NavigationContainer>
-            <Stack.Navigator>{router(isSignedIn)}</Stack.Navigator>
+            <Stack.Navigator>{router(isSigned)}</Stack.Navigator>
         </NavigationContainer>
     );
 }
